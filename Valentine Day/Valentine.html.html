@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💘</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        color: white;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.15);
+        padding: 40px;
+        border-radius: 25px;
+        text-align: center;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        backdrop-filter: blur(10px);
+        animation: fadeIn 1.5s ease;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+
+    .heart {
+        font-size: 90px;
+        animation: pulse 1.4s infinite;
+    }
+
+    p {
+        font-size: 1.2rem;
+        margin: 20px 0;
+    }
+
+    .question-img {
+        width: 100%;
+        max-height: 250px;
+        object-fit: cover;
+        border-radius: 20px;
+        margin: 20px 0;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        animation: fadeIn 0.8s ease;
+    }
+
+    .buttons {
+        margin-top: 25px;
+        position: relative;
+        height: 80px;
+    }
+
+    button {
+        padding: 15px 30px;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    #yesBtn {
+        background: #ff4d6d;
+        color: white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    #yesBtn:hover {
+        transform: scale(1.1);
+    }
+
+    #noBtn {
+        position: absolute;
+        background: white;
+        color: #ff4d6d;
+    }
+
+    /* CHAOS IMAGE 😈 */
+    .celebration-img {
+        width: 100%;
+        border-radius: 25px;
+        margin-top: 20px;
+        animation: shake 0.4s infinite alternate, pulse 1.2s infinite;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    }
+
+    .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: white;
+        animation: fall 3s linear infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.15); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(-100vh) rotate(0); }
+        100% { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    @keyframes shake {
+        0% { transform: rotate(-2deg) scale(1); }
+        100% { transform: rotate(2deg) scale(1.05); }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>Hey Pooja 💖</h1>
+    <div class="heart">❤️</div>
+
+    <img id="questionImage" class="question-img" src="img1.jpg" alt="memory">
+
+    <p id="question"></p>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes 😍</button>
+        <button id="noBtn">No 🙈</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        "Do you believe we’re a perfect match? 💕",
+        "Would you go on endless dates with me? 🍕🎬",
+        "Do I make you smile? 😊",
+        "Can I steal your heart forever? 💘",
+        "Would you travel the world with me — new cities, sunsets, and memories only we understand? 🌍✈️🥰",
+        "Will you be my Valentine? 💌"
+    ];
+
+    const images = [
+        "img4.jpg",
+        "img6.jpg",
+        "img5.jpg",
+        "img1.jpg",
+        "img3.jpg",
+        "img7.jpg",
+    ];
+
+    let index = 0;
+    const questionText = document.getElementById("question");
+    const questionImage = document.getElementById("questionImage");
+
+    questionText.innerText = questions[index];
+    questionImage.src = images[index];
+
+    document.getElementById("yesBtn").addEventListener("click", () => {
+        if (index < questions.length - 1) {
+            index++;
+            questionText.innerText = questions[index];
+            questionImage.src = images[index];
+
+            // retrigger animation
+            questionImage.style.animation = "none";
+            questionImage.offsetHeight;
+            questionImage.style.animation = null;
+        } else {
+            celebrate();
+        }
+    });
+
+    const noBtn = document.getElementById("noBtn");
+    noBtn.addEventListener("mouseover", () => {
+        const x = Math.random() * 300 - 150;
+        const y = Math.random() * 80 - 40;
+        noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    function celebrate() {
+        document.querySelector(".card").innerHTML = `
+            <h1>YAYYY 💖💖💖</h1>
+            <p>You just made me the happiest person ever 🥰</p>
+            <p><strong> I LOVE YOU CUTIE❤️</strong></p>
+            <img src="img2.jpg" class="celebration-img" alt="love">
+        `;
+
+        for (let i = 0; i < 150; i++) {
+            const confetti = document.createElement("div");
+            confetti.classList.add("confetti");
+            confetti.style.left = Math.random() * 100 + "vw";
+            confetti.style.backgroundColor =
+                ["#ff4d6d", "#fff", "#ffb3c6"][Math.floor(Math.random() * 3)];
+            confetti.style.animationDuration = Math.random() * 3 + 2 + "s";
+            document.body.appendChild(confetti);
+        }
+    }
+
+</script>
+
+</body>
+</html>
